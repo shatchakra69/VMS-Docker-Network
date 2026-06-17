@@ -12,8 +12,6 @@
 ![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
 ![License: MIT](https://img.shields.io/badge/License-MIT-3DA639?style=for-the-badge)
 
-**IT Platform — Final Project · Winter 2025/2026**
-UE University of Europe for Applied Sciences · Group 9
 
 </div>
 
