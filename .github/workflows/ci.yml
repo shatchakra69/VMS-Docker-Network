@@ -1,0 +1,61 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  python-checks:
+    name: Python syntax check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Compile Python sources
+        run: |
+          python -m py_compile \
+            task2-linux-vms/python_demo.py \
+            task4-python-container/hello.py \
+            task5-flask-container/app.py
+
+  task4-python-container:
+    name: Build & run Task 4 Python container
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build image
+        run: docker build -t hello-python ./task4-python-container
+      - name: Run container
+        run: docker run --rm hello-python
+
+  task5-flask-container:
+    name: Build & smoke-test Task 5 Flask container
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build image
+        run: docker build -t flask-app ./task5-flask-container
+      - name: Run container
+        run: docker run -d --name flask-app -p 8080:8080 -e MY_COLOR=lightblue flask-app
+      - name: Wait for the server and smoke-test the response
+        run: |
+          for i in $(seq 1 15); do
+            if curl -fsS http://localhost:8080 >/dev/null 2>&1; then
+              echo "Server is up"; break
+            fi
+            echo "waiting for Flask... ($i)"; sleep 2
+          done
+          body="$(curl -fsS http://localhost:8080)"
+          echo "----- response -----"
+          echo "$body"
+          echo "--------------------"
+          echo "$body" | grep -q "Welcome to my custom page"
+          echo "$body" | grep -q "background-color:lightblue"
+          echo "Smoke test passed."
+      - name: Stop container
+        if: always()
+        run: docker rm -f flask-app || true

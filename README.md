@@ -4,6 +4,8 @@
 
 ### Enterprise Network Design · Linux Virtualization · Docker Containerization
 
+[![CI](https://github.com/shatchakra69/VMS-Docker-Network/actions/workflows/ci.yml/badge.svg)](https://github.com/shatchakra69/VMS-Docker-Network/actions/workflows/ci.yml)
+
 ![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
 ![Flask](https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white)
 ![Python](https://img.shields.io/badge/Python%203.11-3776AB?style=for-the-badge&logo=python&logoColor=white)
